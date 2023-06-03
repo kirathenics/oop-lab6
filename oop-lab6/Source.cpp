@@ -1,22 +1,32 @@
 #include <iostream>
 #include <ctime>
 #include <deque>
+#include <stack>
 #include "Pair.h"
 #include "DequeList.h"
 using namespace std;
 
 template <class Container>
 void printContainer(Container& cont);
+template <class Adapter>
+void printAdapter(Adapter cont);
 template <class T>
 void findMaxAndPush(deque<T>& deq);
 template <class T>
+void findMaxAndPush(stack<T>& stk);
+template <class T>
 void findAndErase(deque<T>& deq);
 template <class T>
+void findAndErase(stack<T>& stk);
+template <class T>
 void AddAverage(deque<T>& deq);
+template <class T>
+void AddAverage(stack<T>& stk);
 
 void task1();
 void task2();
 void task3();
+void task4();
 
 int main()
 {
@@ -25,7 +35,8 @@ int main()
 
 	//task1();
 	//task2();
-	task3();
+	//task3();
+	task4();
 
 	return 0;
 }
@@ -42,6 +53,18 @@ void printContainer(Container& cont)
 	return;
 }
 
+template<class Adapter>
+void printAdapter(Adapter adapter)
+{
+	cout << "Содержимое стека:" << endl;
+	while (!adapter.empty())
+	{
+		cout << adapter.top();
+		adapter.pop();
+	}
+	cout << endl;
+}
+
 template <class T>
 void findMaxAndPush(deque<T>& deq)
 {
@@ -52,6 +75,22 @@ void findMaxAndPush(deque<T>& deq)
 		if (*it > max) max = *it;
 	}
 	deq.push_back(max);
+	return;
+}
+
+template<class T>
+void findMaxAndPush(stack<T>& stk)
+{
+	cout << "Задача 3" << endl;
+	stack<T> temp(stk);
+	T max = temp.top();
+	temp.pop();
+	while (!temp.empty())
+	{
+		if (temp.top() > max) max = temp.top();
+		temp.pop();
+	}
+	stk.push(max);
 	return;
 }
 
@@ -77,6 +116,27 @@ void findAndErase(deque<T>& deq)
 }
 
 template <class T>
+void findAndErase(stack<T>& stk)
+{
+	cout << "Задача 4" << endl;
+	cout << "Введите диапазон значений: ";
+	T left, right;
+	cin >> left >> right;
+	stack<T> temp;
+	while (!stk.empty())
+	{
+		if (!(stk.top() > left && stk.top() < right)) temp.push(stk.top());
+		stk.pop();
+	}
+	while (!temp.empty())
+	{
+		stk.push(temp.top());
+		temp.pop();
+	}
+	return;
+}
+
+template <class T>
 void AddAverage(deque<T>& deq)
 {
 	cout << "Задача 5" << endl;
@@ -89,6 +149,32 @@ void AddAverage(deque<T>& deq)
 	for (auto it = deq.begin(); it != deq.end(); ++it)
 	{
 		*it += average;
+	}
+	return;
+}
+
+template <class T>
+void AddAverage(stack<T>& stk)
+{
+	cout << "Задача 5" << endl;
+	stack<T> temp(stk);
+	T average = T();
+	while (!temp.empty())
+	{
+		average += temp.top();
+		temp.pop();
+	}
+	average /= stk.size();
+	while (!stk.empty())
+	{
+		temp.push(stk.top());
+		stk.pop();
+	}
+	while (!temp.empty())
+	{
+		stk.push(temp.top());
+		stk.top() += average;
+		temp.pop();
 	}
 	return;
 }
@@ -118,7 +204,6 @@ void task1()
 void task2()
 {
 	cout << "Задание 2" << endl;
-
 	cout << "Введите размер двусторонней очереди: ";
 	int size;
 	cin >> size;
@@ -142,6 +227,7 @@ void task2()
 
 void task3()
 {
+	cout << "Задание 3" << endl;
 	DequeList<Pair<double, int>> deqList(4);
 	cin >> deqList;
 	cout << deqList;
@@ -151,5 +237,28 @@ void task3()
 	cout << deqList;
 	deqList.AddAverage();
 	cout << deqList;
+	return;
+}
+
+void task4()
+{
+	cout << "Задание 4" << endl;
+	cout << "Введите количество элементов: ";
+	int size;
+	cin >> size;
+	stack<Pair<int, double>> stk;
+	for (int i = 0; i < size; i++)
+	{
+		Pair<int, double> temp(rand() % 100, (double)rand() * (200 - 100) / RAND_MAX + 100);
+		stk.emplace(temp);
+	}
+	printAdapter(stk);
+
+	findMaxAndPush(stk);
+	printAdapter(stk);
+	findAndErase(stk);
+	printAdapter(stk);
+	AddAverage(stk);
+	printAdapter(stk);
 	return;
 }
