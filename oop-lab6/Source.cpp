@@ -4,6 +4,7 @@
 #include <stack>
 #include "Pair.h"
 #include "DequeList.h"
+#include "StackList.h"
 using namespace std;
 
 template <class Container>
@@ -27,6 +28,7 @@ void task1();
 void task2();
 void task3();
 void task4();
+void task5();
 
 int main()
 {
@@ -36,7 +38,8 @@ int main()
 	//task1();
 	//task2();
 	//task3();
-	task4();
+	//task4();
+	task5();
 
 	return 0;
 }
@@ -250,7 +253,7 @@ void task4()
 	for (int i = 0; i < size; i++)
 	{
 		Pair<int, double> temp(rand() % 100, (double)rand() * (200 - 100) / RAND_MAX + 100);
-		stk.emplace(temp);
+		stk.push(temp);
 	}
 	printAdapter(stk);
 
@@ -260,5 +263,28 @@ void task4()
 	printAdapter(stk);
 	AddAverage(stk);
 	printAdapter(stk);
+	return;
+}
+
+void task5()
+{
+	cout << "Задание 5" << endl;
+	cout << "Введите количество элементов: ";
+	int size;
+	cin >> size;
+	StackList<Pair<int, double>> stkList;
+	for (int i = 0; i < size; i++)
+	{
+		Pair<int, double> temp(rand() % 100, (double)rand() * (200 - 100) / RAND_MAX + 100);
+		stkList.push(temp);
+	}
+	cout << stkList;
+
+	stkList.findMaxAndPush();
+	cout << stkList;
+	stkList.findAndErase();
+	cout << stkList;
+	stkList.AddAverage();
+	cout << stkList;
 	return;
 }
