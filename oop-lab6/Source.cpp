@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <deque>
+#include "Pair.h"
 using namespace std;
 
 template <class Container>
@@ -14,13 +15,16 @@ void AddAverage(deque<T>& deq);
 
 void task1();
 void task2();
+void task3();
 
 int main()
 {
 	setlocale(0, "");
 	srand(time(NULL));
 
-	task1();
+	//task1();
+	//task2();
+	task3();
 
 	return 0;
 }
@@ -31,7 +35,7 @@ void printContainer(Container& cont)
 	cout << "Содержимое двусторонней очереди:" << endl;
 	for (auto it = cont.begin(); it != cont.end(); ++it)
 	{
-		cout << *it << " ";
+		cout << *it << "";
 	}
 	cout << endl;
 	return;
@@ -107,20 +111,22 @@ void task1()
 	printContainer(doubleDeque);
 	AddAverage(doubleDeque);
 	printContainer(doubleDeque);
-
 	return;
 }
 
 void task2()
 {
 	cout << "Задание 2" << endl;
+
 	cout << "Введите размер двусторонней очереди: ";
 	int size;
 	cin >> size;
-	deque<double> doubleDeque;
+	deque<Pair<int, double>> doubleDeque;
 	for (int i = 0; i < size; i++)
 	{
-		doubleDeque.push_back((double)rand() * (200 - 100) / RAND_MAX + 100);
+		Pair<int, double> temp;
+		cin >> temp;
+		doubleDeque.push_back(temp);
 	}
 	printContainer(doubleDeque);
 
@@ -130,6 +136,5 @@ void task2()
 	printContainer(doubleDeque);
 	AddAverage(doubleDeque);
 	printContainer(doubleDeque);
-
 	return;
 }
