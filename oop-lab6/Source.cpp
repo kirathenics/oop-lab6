@@ -2,6 +2,7 @@
 #include <ctime>
 #include <deque>
 #include "Pair.h"
+#include "DequeList.h"
 using namespace std;
 
 template <class Container>
@@ -136,5 +137,19 @@ void task2()
 	printContainer(doubleDeque);
 	AddAverage(doubleDeque);
 	printContainer(doubleDeque);
+	return;
+}
+
+void task3()
+{
+	DequeList<Pair<double, int>> deqList(4);
+	cin >> deqList;
+	cout << deqList;
+	deqList.findMaxAndPush();
+	cout << deqList;
+	deqList.findAndErase();
+	cout << deqList;
+	deqList.AddAverage();
+	cout << deqList;
 	return;
 }
